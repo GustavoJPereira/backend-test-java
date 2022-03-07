@@ -11,8 +11,10 @@ public class Relatorio {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long id_empresa;
-    private Long id_veiculo;
+    private Long empresa_id;
+    private Long veiculo_id;
+    private String entrada;
+    private String saida;
 
     public Long getId() {
         return id;
@@ -22,19 +24,35 @@ public class Relatorio {
         this.id = id;
     }
 
-    public Long getId_empresa() {
-        return id_empresa;
+    public Long getEmpresa_id() {
+        return empresa_id;
     }
 
-    public void setId_empresa(Long id_empresa) {
-        this.id_empresa = id_empresa;
+    public void setEmpresa_id(Long empresa_id) {
+        this.empresa_id = empresa_id;
     }
 
-    public Long getId_veiculo() {
-        return id_veiculo;
+    public Long getVeiculo_id() {
+        return veiculo_id;
     }
 
-    public void setId_veiculo(Long id_veiculo) {
-        this.id_veiculo = id_veiculo;
+    public void setVeiculo_id(Long veiculo_id) {
+        this.veiculo_id = veiculo_id;
+    }
+
+    public String getEntrada() {
+        return entrada;
+    }
+
+    public void setEntrada(String entrada) {
+        this.entrada = entrada;
+    }
+
+    public String getSaida() {
+        return saida;
+    }
+
+    public void setSaida(String saida) {
+        this.saida = saida;
     }
 }

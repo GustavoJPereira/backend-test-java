@@ -3,9 +3,7 @@ package br.com.backendtestjava.backendtestjava.endpoint;
 import br.com.backendtestjava.backendtestjava.entity.Relatorio;
 import br.com.backendtestjava.backendtestjava.respository.RepositoryRelatorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +17,23 @@ public class EndpointRelatorio {
     @GetMapping
     public List<Relatorio> listAll() {
         return repositoryRelatorio.findAll();
+    }
+
+    @PostMapping
+    public void addRelatorio(@RequestBody Relatorio relatorio) {
+        repositoryRelatorio.save(relatorio);
+    }
+
+    @PutMapping (path = "/{id}")
+    public void editRelatorio(@PathVariable ("id") Long id, @RequestBody Relatorio relatorio) {
+        if (repositoryRelatorio.findById(id).isPresent()) {
+            relatorio.setId(id);
+            repositoryRelatorio.save(relatorio);
+        }
+    }
+
+    @DeleteMapping (path = "/{id}")
+    public void deleteRelatorio(@PathVariable ("id") Long id) {
+        repositoryRelatorio.deleteById(id);
     }
 }

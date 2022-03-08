@@ -21,6 +21,9 @@ public class    EndpointVeiculo {
 
     @PostMapping
     public void addVeiculo(@RequestBody Veiculo veiculo) {
+        if (veiculo.getId() != null) {
+            veiculo.setId(null);
+        }
         repositoryVeiculo.save(veiculo);
     }
 

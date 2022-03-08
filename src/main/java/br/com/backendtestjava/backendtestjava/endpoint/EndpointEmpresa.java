@@ -3,7 +3,6 @@ package br.com.backendtestjava.backendtestjava.endpoint;
 import br.com.backendtestjava.backendtestjava.entity.Empresa;
 import br.com.backendtestjava.backendtestjava.respository.RepositoryEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/empresa")
 public class EndpointEmpresa {
+
     @Autowired
     private RepositoryEmpresa repositoryEmpresa;
 
@@ -27,6 +27,9 @@ public class EndpointEmpresa {
 
     @PostMapping
     public void addEmpresa(@RequestBody Empresa empresa) {
+        if (empresa.getId() != null) {
+            empresa.setId(null);
+        }
         repositoryEmpresa.save(empresa);
     }
 

@@ -3,6 +3,8 @@ package br.com.backendtestjava.backendtestjava.endpoint;
 import br.com.backendtestjava.backendtestjava.entity.Relatorio;
 import br.com.backendtestjava.backendtestjava.respository.RepositoryRelatorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,9 @@ public class EndpointRelatorio {
 
     @PostMapping
     public void addRelatorio(@RequestBody Relatorio relatorio) {
+        if (relatorio.getId() != null) {
+            relatorio.setId(null);
+        }
         repositoryRelatorio.save(relatorio);
     }
 

@@ -5,6 +5,8 @@ import br.com.backendtestjava.backendtestjava.respository.RepositoryRelatorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,23 +24,32 @@ public class EndpointRelatorio {
     }
 
     @PostMapping
-    public void addRelatorio(@RequestBody Relatorio relatorio) {
+    public ResponseEntity addRelatorio(@RequestBody Relatorio relatorio) {
         if (relatorio.getId() != null) {
             relatorio.setId(null);
         }
         repositoryRelatorio.save(relatorio);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping (path = "/{id}")
-    public void editRelatorio(@PathVariable ("id") Long id, @RequestBody Relatorio relatorio) {
+    public ResponseEntity editRelatorio(@PathVariable ("id") Long id, @RequestBody Relatorio relatorio) {
         if (repositoryRelatorio.findById(id).isPresent()) {
             relatorio.setId(id);
             repositoryRelatorio.save(relatorio);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping (path = "/{id}")
-    public void deleteRelatorio(@PathVariable ("id") Long id) {
-        repositoryRelatorio.deleteById(id);
+    public ResponseEntity deleteRelatorio(@PathVariable ("id") Long id) {
+        if (repositoryRelatorio.findById(id).isPresent()) {
+            repositoryRelatorio.deleteById(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }

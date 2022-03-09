@@ -3,6 +3,8 @@ package br.com.backendtestjava.backendtestjava.endpoint;
 import br.com.backendtestjava.backendtestjava.entity.Veiculo;
 import br.com.backendtestjava.backendtestjava.respository.RepositoryVeiculo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,20 +22,32 @@ public class    EndpointVeiculo {
     }
 
     @PostMapping
-    public void addVeiculo(@RequestBody Veiculo veiculo) {
+    public ResponseEntity addVeiculo(@RequestBody Veiculo veiculo) {
+        if (veiculo.getId() != null) {
+            veiculo.setId(null);
+        }
         repositoryVeiculo.save(veiculo);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{id}")
-    public void editVeiculo(@PathVariable("id") Long id,@RequestBody Veiculo veiculo) {
+    public ResponseEntity editVeiculo(@PathVariable("id") Long id,@RequestBody Veiculo veiculo) {
         if (repositoryVeiculo.findById(id).isPresent()) {
             veiculo.setId(id);
             repositoryVeiculo.save(veiculo);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteVeiculo(@PathVariable("id") Long id) {
-        repositoryVeiculo.deleteById(id);
+    public ResponseEntity deleteVeiculo(@PathVariable("id") Long id) {
+        if (repositoryVeiculo.findById(id).isPresent()) {
+            repositoryVeiculo.deleteById(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }

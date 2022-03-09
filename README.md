@@ -1,58 +1,220 @@
-### FCamara 🚀
-*"Queremos ser como uma árvore, 
-  crescer um pouco todos os dias e tentar tocar o céu, 
-  sem perder a solidez de nossas raízes."*
-Conheça: www.fcamara.com.br
 
-## Teste para vaga de Desenvolvedor Back-end
-Criar uma API REST para gerenciar um estacionamento de carros e motos.
+# API de estacionamento para Back-end test Java Fcamara
 
-## Cadastro de estabelecimento
+Esta API foi criada para um teste da empresa Fcamara. Link: https://github.com/fcamarasantos/backend-test-java
 
-Criar um cadastro da empresa com os seguintes campos:
-- Nome;
-- CNPJ;
-- Endereço;
-- Telefone;
-- Quantidade de vagas para motos;
-- Quantidade de vagas para carros.
+Ela Usa um banco de dados mySQL e Java para a integração. Foi criada usando o 
+intelliJ IDEA, com BrModelo para criação dos modelos conceitual e lógico do banco, mais o Postman para testes das requisições HTTP.
 
-**Todos** os campos são de preenchimento obrigatório.
+O corpo das requisições e respostas está em JSON.
 
-## Cadastro de veículos
+## Modelos do banco
 
-Criar um cadastro de veículos com os seguintes campos:
-- Marca;
-- Modelo;
-- Cor;
-- Placa;
-- Tipo.
+#### Conceitual:
 
-**Todos** os campos são de preenchimento obrigatório.
+![App Screenshot](https://github.com/GustavoJPereira/backend-test-java/blob/master/extras/Modelo%20Conceitual.png?raw=true)
 
-## Funcionalidades
+#
 
-   - **Estabelecimento:** CRUD;
-   - **Veículos:** CRUD;
-   - **Controle de entrada e saída de veículos.**
+#### Lógico:
 
-## Requisitos
+![App Screenshot](https://github.com/GustavoJPereira/backend-test-java/blob/master/extras/Modelo%20L%C3%B3gico.png?raw=true)
+## Stack utilizada
 
-   - Modelagem de dados;
-   - O retorno deverá ser em formato JSON e XML;
-   - Requisições GET, POST, PUT ou DELETE, conforme a melhor prática;
-   - A persistência dos dados pode ser realizada da maneira que preferir;
-   - Criar README do projeto descrevendo as tecnologias utilizadas, chamadas dos serviços e configurações necessário para executar a aplicação.
-   
-## Ganha mais pontos
-   - Desenvolver utilizando TDD;
-   - Criar API de relatório;
-   - Sumário da quantidade de entrada e saída;
-   - Sumário da quantidade de entrada e saída de veículos por hora;
-   - Criar uma solução de autenticação.
+**Dados:** mySQL
 
-## Submissão
-Crie um fork do teste para acompanharmos o seu desenvolvimento através dos seus commits.
+**Back-end:** Java, Marven, SpringBoot
 
-## Obrigado!
-Agradecemos sua participação no teste. Boa sorte! 😄
+
+## Instalação
+
+Para instalar o projeto, use o arquivo  [**EstacionamentoFcamara.sql**](extras/EstacionamentoFcamara.sql) no mySQL para criar 
+o banco de dados.
+Em seguida, em **src/main/resources** edite o arquivo **application.properties** na linha
+2, substituindo a palavra **root** pelo root do mySQL e na linha 3, substituindo a palavra
+**senha** pela senha do root.
+    
+## Documentação da API
+
+A API pode responder as solicitações para três entidades:
+
+* **Empresa**
+* **Veículo**
+* **Relatorio**
+
+A seguir as requisições possíveis. Os Parâmetro que não estiverem marcados como **URL**
+são passados no corpo da requisição.
+
+Todas as requisições devem ser feitas pela caminho **http://localhost:8080**.
+
+#### Exemplo:
+``` http
+    PUT http://localhost:8080/empresa/3
+```
+
+``` JSON
+    {
+    "cnpj": 11122233344455,
+    "nome": "empresa A",
+    "telefone": "4444-4444",
+    "vagas_carro": 3,
+    "vagas_moto": 4
+}
+```
+
+### **Empresa**
+
+A empresa na qual o estacionamento está.
+
+#### Retorna todos os itens
+
+```http
+  GET /empresa
+```
+
+
+#### Insere um novo item no banco
+```http
+  POST /empresa
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `nome`      | `String` | **Obrigatório**. O nome da empresa. |
+| `cnpj`      | `String` | **Obrigatório**. O CNJP da empresa. |
+| `telefone`  | `Long` | **Obrigatório**. O telefone da empresa. |
+| `vagas_moto` | `int` | **Obrigatório**. Quantidade de vagas para motos no estacionamento. |
+| `vagas_carro` | `int` | **Obrigatório**. Quantidade de vagas para carros no estacionamento. |
+
+
+
+#### Atualiza um item no banco
+```http
+  PUT /empresa/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `Long` | **Obrigatório**, **URL**. O ID do item desejado. |
+| `nome`      | `String` | **Obrigatório**. O nome da empresa. |
+| `cnpj`      | `String` | **Obrigatório**. O CNJP da empresa. |
+| `telefone`  | `Long` | **Obrigatório**. O telefone da empresa. |
+| `vagas_moto` | `int` | **Obrigatório**. Quantidade de vagas para motos no estacionamento. |
+| `vagas_carro` | `int` | **Obrigatório**. Quantidade de vagas para carros no estacionamento. |
+
+
+#### Retira um item do banco
+```http
+  DELETE /empresa/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `Long` | **Obrigatório**, **URL**. O ID do item desejado. |
+
+
+### **Veículo**
+
+O veículo (moto ou carro) que irá estacionar.
+
+#### Retorna todos os itens
+
+```http
+  GET /veiculo
+```
+
+#### Insere um novo item no banco
+```http
+  POST /veiculo
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `marca`      | `String` | **Obrigatório**. A marca do veículo. |
+| `cor`      | `String` | **Obrigatório**. A cor do veículo. |
+| `placa`  | `String` | **Obrigatório**. A placa do veículo. |
+| `tipo` | `String` | **Obrigatório**. Tipo de veículo. Só aceito **moto** ou **carro** |
+| `modelo` | `String` | **Obrigatório**. modelo do veículo. |
+
+
+
+#### Atualiza um item no banco
+```http
+  PUT /veiculo/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `Long` | **Obrigatório**, **URL**. O ID do item desejado. |
+| `marca`      | `String` | **Obrigatório**. A marca do veículo. |
+| `cor`      | `String` | **Obrigatório**. A cor do veículo. |
+| `placa`  | `String` | **Obrigatório**. A placa do veículo. |
+| `tipo` | `String` | **Obrigatório**. Tipo de veículo. Só aceito **moto** ou **carro**. |
+| `modelo` | `String` | **Obrigatório**. modelo do veículo. |
+
+
+#### Retira um item do banco
+```http
+  DELETE /veiculo/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `Long` | **Obrigatório**, **URL**. O ID do item desejado. |
+
+
+### **Relatório**
+
+Relatório que relaciona os veículos a empresa. Com registro de quando entraram e saíram (ou vão sair). 
+
+#### Retorna todos os itens
+
+```http
+  GET /relatorio
+```
+
+#### Insere um novo item no banco
+```http
+  POST /relatorio
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `empresa_id`      | `Long` | **Obrigatório**. O ID da empresa em que o veículo está/estava (Somente possível usar IDs existentes no banco). |
+| `veiculo_id`      | `String` | **Obrigatório**. O ID do veículo que foi estacionado (Somente possível usar IDs existentes no banco). |
+| `entrada`  | `String` | **Obrigatório**. O horário de entrada do veículo. |
+| `saida` | `String` | O horário de saída do veículo. |
+
+
+
+#### Atualiza um item no banco
+```http
+  PUT /relatorio/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `Long` | **Obrigatório**, **URL**. O ID do item desejado. |
+| `empresa_id`      | `Long` | **Obrigatório**. O ID da empresa em que o veículo está/estava (Somente possível usar IDs existentes no banco). |
+| `veiculo_id`      | `String` | **Obrigatório**. O ID do veículo que foi estacionado (Somente possível usar IDs existentes no banco). |
+| `entrada`  | `String` | **Obrigatório**. O horário de entrada do veículo. |
+| `saida` | `String` | O horário de saída do veículo. |
+
+
+#### Retira um item do banco
+```http
+  DELETE /relatorio/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `Long` | **Obrigatório**, **URL**. O ID do item desejado. |
+
+
+
+## Feedback
+
+Se você tiver algum feedback, eu gostaria de receber pelo linkedin https://linkedin.com/in/gustavojpereira/
+
+ou pelo e-mail gustavojosepereira2021@gmail.com
+

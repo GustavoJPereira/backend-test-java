@@ -3,6 +3,8 @@ package br.com.backendtestjava.backendtestjava.endpoint;
 import br.com.backendtestjava.backendtestjava.entity.Veiculo;
 import br.com.backendtestjava.backendtestjava.respository.RepositoryVeiculo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,8 @@ public class    EndpointVeiculo {
     private RepositoryVeiculo repositoryVeiculo;
 
     @GetMapping
-    public List<Veiculo> listAll() {
-        return repositoryVeiculo.findAll();
+    public Page<Veiculo> listAll(Pageable pageable) {
+        return repositoryVeiculo.findAll(pageable);
     }
 
     @PostMapping

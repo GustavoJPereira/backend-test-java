@@ -3,6 +3,8 @@ package br.com.backendtestjava.backendtestjava.endpoint;
 import br.com.backendtestjava.backendtestjava.entity.Empresa;
 import br.com.backendtestjava.backendtestjava.respository.RepositoryEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,8 @@ public class EndpointEmpresa {
     private RepositoryEmpresa repositoryEmpresa;
 
     @GetMapping
-    public List<Empresa> listAll() {
-        return repositoryEmpresa.findAll();
+    public Page<Empresa> listAll(Pageable pageable) {
+        return repositoryEmpresa.findAll(pageable);
     }
 
     @GetMapping(path = "/{id}")

@@ -23,12 +23,6 @@ public class EndpointEmpresa {
         return repositoryEmpresa.findAll(pageable);
     }
 
-    @GetMapping(path = "/{id}")
-    public Empresa findById(@PathVariable("id") Long id) {
-        Empresa empresa = repositoryEmpresa.findById(id).get();
-        return empresa;
-    }
-
     @PostMapping
     public ResponseEntity addEmpresa(@RequestBody Empresa empresa) {
         if (empresa.getId() != null) {

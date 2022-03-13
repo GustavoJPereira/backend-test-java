@@ -53,13 +53,33 @@ Todas as requisições devem ser feitas pela caminho **http://localhost:8080**.
 ```
 
 ``` JSON
-    {
+{
     "cnpj": 11122233344455,
     "nome": "empresa A",
     "telefone": "4444-4444",
     "vagas_carro": 3,
     "vagas_moto": 4
 }
+```
+
+Os métodos GET permitem a inserção de sort para ordenar a pesquisa. Exemplo:
+
+``` HTTP
+GET http://localhost:8080/empresa?sort=name,desc
+```
+
+Use '?' no final da url seguido da coluna que deseja filtrar mais a ordem que pode ser asc(ascendente) 
+ou desc(descendente).
+
+Você pode decidir como será feita a paginação com sort 'size' para a quantidade de entidades 
+e 'page' para decidir a página que receberá.
+
+Para usar mais de um destes os separe usando um '&' ('e' comercial) ;
+
+Exemplo:
+
+``` HTTP
+GET http://localhost:8080/empresa?size=10&page=0;
 ```
 
 ### **Empresa**

@@ -22,7 +22,7 @@ public class EndpointRelatorio {
 
     @GetMapping
     public Page<Relatorio> listAll(Pageable pageable) {
-        return repositoryRelatorio.findAll(pageable);
+        return repositoryRelatorio.findAll(pageable) ;
     }
 
     @PostMapping
